@@ -10,21 +10,27 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="bg-transparent py-4 absolute top-0 left-0 w-full z-10">
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto flex justify-between items-center px-4 md:px-8">
         <Link href="/" className="flex items-center">
-          <Image src="/assets/logo-tpt.png" alt="Logo" width={50} height={50} />
+          <Image
+            src="/assets/logo-tpt.png"
+            alt="Logo"
+            width={50}
+            height={50}
+            className="w-auto h-10 md:h-12 lg:h-14"
+          />
         </Link>
-        <div className="flex-grow flex justify-center">
+        <div className="flex-grow flex justify-center mx-4 md:mx-8">
           <Image
             src="/assets/0.png" // Replace with the path to your image
             alt="Middle Image"
             width={500} // Adjust width as needed
             height={50} // Adjust height as needed
             objectFit="contain"
-            className="ml-32" // Adjust this value to shift the image to the right
+            className="w-full max-w-xs md:max-w-lg lg:max-w-xl"
           />
         </div>
-        <div className="hidden md:flex space-x-6 ml-10"> {/* Added ml-8 to shift links to the left */}
+        <div className="hidden md:flex space-x-6 ml-4">
           <Link href="/" className="text-black hover:text-red">
             Home
           </Link>
@@ -45,8 +51,8 @@ const Navbar: React.FC = () => {
       </div>
       {isOpen && (
         <div className="md:hidden bg-transparent py-4 absolute top-full left-0 w-full z-10">
-          <div className="flex flex-col space-y-4">
-            <Link href="/" className="text-white hover:text-white">
+          <div className="flex flex-col space-y-4 px-4">
+            <Link href="/" className="text-black hover:text-white">
               Home
             </Link>
             <Link href="/about" className="text-black hover:text-white">
