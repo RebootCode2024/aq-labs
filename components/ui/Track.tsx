@@ -1,5 +1,6 @@
-// src/components/ui/Track.tsx
-import React from 'react';
+"use client";
+
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { 
   Carousel, 
@@ -9,24 +10,54 @@ import {
   CarouselPrevious 
 } from './carousel'; // Adjust the import path as needed
 
-interface TrackProps {
+interface SongData {
+  _id: { $oid: string };
   title: string;
   description: string;
-  posterUrl: string; // Add a prop for the poster URL
+  posterUrl: string;
+  carouselDescription: string;
+  firstVideoDescription: string;
+  secondVideoDescription: string;
+  lastVideoDescription: string;
+  images: string[];
+  firstVideoUrl: string;
+  secondVideoUrl: string;
+  lastVideoUrl: string;
 }
 
-const Track: React.FC<TrackProps> = ({ title, description, posterUrl }) => {
-  const images = [
-    "https://yt3.ggpht.com/2dakIYA-L9etQFjHzejZl2C3KZauHo2BWHMKtnaPVuyXswFBvlfrlSt5dE4AdOeQbz6tmuQTQsFOaw=s576-c-fcrop64=1,647a0000f47affff-rw-nd-v1",
-    "https://yt3.ggpht.com/d7GLvjvaB80FQFHB2L0g0rLUooSOBMcGgr1DG6TNBuDKtZDmvcVUyJqFeJ05twdlIoXYF9Ho597p=s576-c-fcrop64=1,2b0a0000bb0affff-rw-nd-v1",
-    "https://yt3.ggpht.com/ToVo4_88g-zLy6g0zkHzS-Li8hDB5lixDL-QtTelsVyToRg-178IanUjGuBVaPewLarUTVtEzTzN0A=s575-c-fcrop64=1,3b000000cabfffff-rw-nd-v1",
-    "https://yt3.ggpht.com/qJSt1mNkS478odVgDyA-Dx9fSEa6H3CiF9uyBxKn566Ynn2Aqo81e5nd5AaGeUCFPgq_0QsGeUyB5A=s576-c-fcrop64=1,40a40000d0a3ffff-rw-nd-v1"
-  ];
+const Track: React.FC<SongData> = ({
+  title,
+  description,
+  posterUrl,
+  carouselDescription,
+  firstVideoDescription,
+  secondVideoDescription,
+  lastVideoDescription,
+  images,
+  firstVideoUrl,
+  secondVideoUrl,
+  lastVideoUrl,
+}) => {
+  const embedUrl = (url: string) => {
+    const videoIdMatch = url.match(
+      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+    );
+    const videoId = videoIdMatch ? videoIdMatch[1] : null;
+    return videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : '';
+  };
 
-  const carouselDescription = "Farewell’s melody softened by the sweet notes of reunion";
-  const firstVideoDescription = "The dusk of distance surrenders to the graceful dawn of reunion.\n\nOfficial video dropping soon...";
-  const secondVideoDescription = "Shot in the beautiful Mashobra valley, 'Riyazat' marks the debut of Aquaregia. Fortunate enough to have worked alongside a very cohesive and well organised team spear-headed by Director Emminel, Aquaregia set its sail for a long voyage ahead...";
-  const lastVideoDescription = "Inspired by Raag Yaman, 'Riyazat' was blessed to have some soulful melodies embellish its melancholic yet deeply soothing vibe by none other than the flute maestro, Pandit Ajay Prasanna ji. #Raagbasedsongs #Songofseparation";
+  useEffect(() => {
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    if (firstScriptTag?.parentNode) {
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    return () => {
+      delete (window as any).onYouTubeIframeAPIReady;
+    };
+  }, []);
 
   return (
     <div className="border border-black rounded-lg p-4 bg-white shadow-md m-4 text-center flex flex-col items-center w-full">
@@ -62,42 +93,48 @@ const Track: React.FC<TrackProps> = ({ title, description, posterUrl }) => {
         </Carousel>
       </div>
       <div className="w-full mt-4 flex flex-col items-center space-y-4">
-        <p className="text-center text-lg mb-2">
-          {firstVideoDescription}
-        </p>
-        <iframe 
-          width="100%" 
-          height="400" 
-          src="https://www.youtube.com/embed/KHw3L-k-izY?si=Uen5pp1C7cpgPEll" 
-          title="YouTube video player" 
-          frameBorder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowFullScreen>
-        </iframe>
-        <p className="text-center text-lg mb-2">
-          {secondVideoDescription}
-        </p>
-        <iframe 
-          width="100%" 
-          height="400" 
-          src="https://www.youtube.com/embed/d8yRyDqvYas?si=rva6mpbDMtBYA8xe" 
-          title="YouTube video player" 
-          frameBorder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowFullScreen>
-        </iframe>
-        <p className="text-center text-lg mb-2">
-          {lastVideoDescription}
-        </p>
-        <iframe 
-          width="100%" 
-          height="400" 
-          src="https://www.youtube.com/embed/IjAIuMjIHkg?si=EFCGCF9YPBR0XwlK" 
-          title="YouTube video player" 
-          frameBorder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowFullScreen>
-        </iframe>
+        {firstVideoUrl && (
+          <>
+            <p className="text-center text-lg mb-2">{firstVideoDescription}</p>
+            <iframe
+              width="560"
+              height="315"
+              src={embedUrl(firstVideoUrl)}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </>
+        )}
+        {secondVideoUrl && (
+          <>
+            <p className="text-center text-lg mb-2">{secondVideoDescription}</p>
+            <iframe
+              width="560"
+              height="315"
+              src={embedUrl(secondVideoUrl)}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </>
+        )}
+        {lastVideoUrl && (
+          <>
+            <p className="text-center text-lg mb-2">{lastVideoDescription}</p>
+            <iframe
+              width="560"
+              height="315"
+              src={embedUrl(lastVideoUrl)}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </>
+        )}
       </div>
     </div>
   );
