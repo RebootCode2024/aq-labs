@@ -60,7 +60,7 @@ const Track: React.FC<SongData> = ({
   }, []);
 
   return (
-    <div className="border border-black rounded-lg p-4 bg-white shadow-md m-4 text-center flex flex-col items-center w-full">
+    <div className="border border-black rounded-lg p-4 bg-white shadow-lg m-4 text-center flex flex-col items-center w-full">
       <h2 className="text-2xl font-bold mb-2">{title}</h2>
       <h3 className="mb-4 text-center">{description}</h3>
       <div className="flex justify-center w-full max-w-2xl">
@@ -96,43 +96,43 @@ const Track: React.FC<SongData> = ({
         {firstVideoUrl && (
           <>
             <p className="text-center text-lg mb-2">{firstVideoDescription}</p>
-            <iframe
-              width="560"
-              height="315"
-              src={embedUrl(firstVideoUrl)}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            <div className="video-container">
+              <iframe
+                src={embedUrl(firstVideoUrl)}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
           </>
         )}
         {secondVideoUrl && (
           <>
             <p className="text-center text-lg mb-2">{secondVideoDescription}</p>
-            <iframe
-              width="560"
-              height="315"
-              src={embedUrl(secondVideoUrl)}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            <div className="video-container">
+              <iframe
+                src={embedUrl(secondVideoUrl)}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
           </>
         )}
         {lastVideoUrl && (
           <>
             <p className="text-center text-lg mb-2">{lastVideoDescription}</p>
-            <iframe
-              width="560"
-              height="315"
-              src={embedUrl(lastVideoUrl)}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            <div className="video-container">
+              <iframe
+                src={embedUrl(lastVideoUrl)}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
           </>
         )}
       </div>
