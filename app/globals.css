@@ -196,3 +196,86 @@ h1, h2, h3, h4, h5, h6 {
 p, a, span {
   font-family: 'Inter', sans-serif;
 }
+/* styles/globals.css or a dedicated CSS file */
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated-heading {
+  animation: fadeIn 2s ease-in-out;
+}
+/* Keyframes for fade-in and fade-out */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Card animation classes */
+.card-fade-in {
+  animation: fadeIn 0.5s forwards;
+}
+
+.card-fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+
+/* Class for the blur effect with transition */
+/* /* Increase blur effect */
+.blur-background {
+  backdrop-filter: blur(10px); /* Increase blur */
+  transition: backdrop-filter 0.3s ease, filter 0.3s ease;
+}
+
+/* Center-align content inside the card */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Optional: Add some padding to the card content */
+.card-content p {
+  padding: 0 1rem;
+}
+/* Underline animation */
+.underline-animation {
+  display: inline-block;
+  position: relative;
+  color: inherit;
+}
+
+.underline-animation::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: black; /* Adjust color as needed */
+  transform-origin: bottom right;
+  animation: underline 1s forwards ease-out; /* Increased duration to 1s */
+}
+
+/* Keyframes for the underline animation */
+@keyframes underline {
+  to {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+}

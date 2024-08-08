@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<{ onAboutUsClick: () => void }> = ({ onAboutUsClick }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -31,15 +31,9 @@ const Navbar: React.FC = () => {
           />
         </div>
         <div className="hidden md:flex space-x-6 ml-4">
-          <Link href="/" className="text-black hover:text-red">
-            Home
-          </Link>
-          <Link href="/about" className="text-black hover:text-red">
-            About
-          </Link>
-          <Link href="/contact" className="text-black hover:text-red">
-            Contact
-          </Link>
+          <button onClick={onAboutUsClick} className="text-black hover:text-red">
+            About Us
+          </button>
         </div>
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} className="text-black hover:text-white">
@@ -55,9 +49,9 @@ const Navbar: React.FC = () => {
             <Link href="/" className="text-black hover:text-white">
               Home
             </Link>
-            <Link href="/about" className="text-black hover:text-white">
-              About
-            </Link>
+            <button onClick={onAboutUsClick} className="text-black hover:text-white">
+              About Us
+            </button>
             <Link href="/contact" className="text-black hover:text-white">
               Contact
             </Link>
